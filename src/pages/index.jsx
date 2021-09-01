@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Post from '../components/Post';
 import styles from '../styles/Home.module.scss';
 
 export default function Home() {
@@ -16,25 +17,28 @@ export default function Home() {
 
         <ul className={styles.posts}>
           <li>
-            <p className={styles.postsContent}>
-              I’m working in Figma trying to design a new website that shows all
-              of my tweet
-            </p>
-            <p className={styles.postsDate}>8/31/2021</p>
+            <Post content="Hey, I'm a new post!" date="09/01/2021" />
           </li>
           <li>
-            <p className={styles.postsContent}>
-              I’m working in Figma trying to design a new website that shows all
-              of my tweet
-            </p>
-            <p className={styles.postsDate}>8/31/2021</p>
+            <Post
+              content="I’m working in Figma trying to design a new website that shows all
+              of my tweet"
+              date="08/31/2021"
+            />
           </li>
           <li>
-            <p className={styles.postsContent}>
-              I’m working in Figma trying to design a new website that shows all
-              of my tweet
-            </p>
-            <p className={styles.postsDate}>8/31/2021</p>
+            <Post
+              content="I’m working in Figma trying to design a new website that shows all
+              of my tweet"
+              date="08/31/2021"
+            />
+          </li>
+          <li>
+            <Post
+              content="I’m working in Figma trying to design a new website that shows all
+              of my tweet"
+              date="08/31/2021"
+            />
           </li>
         </ul>
 
