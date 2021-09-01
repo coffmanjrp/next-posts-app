@@ -5,9 +5,24 @@
   line-height: 2.6875rem;
 }
 
-.postsDate {
+.postsMeta {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  list-style-type: none;
+  color: #414141;
+}
+
+.postsMetaData {
+  display: flex;
+  align-items: center;
   margin-top: 0.4rem;
+  margin-right: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 2.0625rem;
+  svg {
+    margin-right: 0.3rem;
+    font-size: 0.85rem;
+  }
 }
