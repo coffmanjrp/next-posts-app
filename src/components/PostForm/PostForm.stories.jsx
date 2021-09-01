@@ -2,7 +2,7 @@ import React from 'react';
 
 import PostForm from './PostForm';
 
-export default {
+const PostFormStories = {
   title: 'Components/PostForm',
   component: PostForm,
 };
@@ -10,3 +10,5 @@ export default {
 const Template = () => <PostForm />;
 
 export const Default = Template.bind({});
+
+export default PostFormStories;

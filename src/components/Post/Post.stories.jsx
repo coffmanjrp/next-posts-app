@@ -2,7 +2,7 @@ import React from 'react';
 
 import Post from './Post';
 
-export default {
+const PostStories = {
   title: 'Components/Post',
   component: Post,
 };
@@ -16,3 +16,5 @@ const Template = () => (
 );
 
 export const Default = Template.bind({});
+
+export default PostStories;
