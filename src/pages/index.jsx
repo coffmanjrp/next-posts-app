@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import Bio from '../components/Bio';
 import Post from '../components/Post';
 import PostForm from '../components/PostForm';
 import styles from '../styles/Home.module.scss';
@@ -14,7 +15,13 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Next Posts App</h1>
+        {/* <h1 className={styles.title}>Next Posts App</h1> */}
+        <Bio
+          headshot="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"
+          name="Paul Coffman Jr."
+          tagline="Web Developer"
+          role="Full stack engineer, Web Designer"
+        />
 
         <ul className={styles.posts}>
           <li>
