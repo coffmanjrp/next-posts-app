@@ -19,6 +19,7 @@
     "sass": "^1.38.2"
   },
   "devDependencies": {
+    "@applitools/eyes-storybook": "^3.24.0",
     "@babel/core": "^7.15.0",
     "@storybook/addon-actions": "^6.3.7",
     "@storybook/addon-essentials": "^6.3.7",
