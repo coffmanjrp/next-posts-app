@@ -1,15 +1,12 @@
 import Head from 'next/head';
-import Image from 'next/image';
 import Bio from '../components/Bio';
 import Post from '../components/Post';
 import PostForm from '../components/PostForm';
 import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Home.module.scss';
 
-export default function Home() {
+export default function Home({ posts }) {
   const { user, login, logout } = useAuth();
-
-  console.log(user);
 
   return (
     <div className={styles.container}>
@@ -42,30 +39,21 @@ export default function Home() {
         />
 
         <ul className={styles.posts}>
-          <li>
-            <Post content="Hey, I'm a new post!" date="09/01/2021" />
-          </li>
-          <li>
-            <Post
-              content="I’m working in Figma trying to design a new website that shows all
-              of my tweet"
-              date="08/31/2021"
-            />
-          </li>
-          <li>
-            <Post
-              content="I’m working in Figma trying to design a new website that shows all
-              of my tweet"
-              date="08/31/2021"
-            />
-          </li>
-          <li>
-            <Post
-              content="I’m working in Figma trying to design a new website that shows all
-              of my tweet"
-              date="08/31/2021"
-            />
-          </li>
+          {posts.map((post) => {
+            const { id, content, date } = post;
+
+            return (
+              <li key={id}>
+                <Post
+                  content={content}
+                  date={new Intl.DateTimeFormat('en-US', {
+                    dateStyle: 'short',
+                    timeStyle: 'short',
+                  }).format(new Date(date))}
+                />
+              </li>
+            );
+          })}
         </ul>
 
         {user && <PostForm />}
@@ -73,3 +61,28 @@ export default function Home() {
     </div>
   );
 }
+
+export const getStaticProps = async () => {
+  const res = await fetch(
+    `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/Posts`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.AIRTABLE_API_KEY}`,
+      },
+    }
+  );
+  const { records } = await res.json();
+
+  const posts = records.map((record) => {
+    return {
+      id: record.id,
+      ...record.fields,
+    };
+  });
+
+  return {
+    props: {
+      posts,
+    },
+  };
+};
