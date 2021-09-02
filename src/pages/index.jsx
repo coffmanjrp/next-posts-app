@@ -10,17 +10,23 @@ export default function Home({ posts: defaultPosts }) {
   const [posts, updatePosts] = useState(defaultPosts);
   const { user, login, logout } = useAuth();
 
-  useEffect(() => {
-    const run = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`
-      );
-      const { posts } = await res.json();
-      updatePosts(posts);
-    };
+  const handleOnSubmit = async (data, e) => {
+    e.preventDefault();
 
-    run();
-  }, []);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`,
+      {
+        method: 'POST',
+        body: JSON.stringify(data),
+      }
+    );
+
+    const responseGet = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`
+    );
+    const { posts } = await responseGet.json();
+    updatePosts(posts);
+  };
 
   return (
     <div className={styles.container}>
@@ -70,7 +76,7 @@ export default function Home({ posts: defaultPosts }) {
           })}
         </ul>
 
-        {user && <PostForm />}
+        {user && <PostForm onSubmit={handleOnSubmit} />}
       </main>
     </div>
   );
