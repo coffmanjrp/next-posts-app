@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Home.module.scss';
 
 export default function Home() {
-  const { user, login } = useAuth();
+  const { user, login, logout } = useAuth();
 
   console.log(user);
 
@@ -20,9 +20,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p>
-        <button onClick={() => login()}>Login</button>
-      </p>
+      {!user && (
+        <p>
+          <button onClick={() => login()}>Log In</button>
+        </p>
+      )}
+
+      {user && (
+        <p>
+          <button onClick={() => logout()}>Log Out</button>
+        </p>
+      )}
 
       <main className={styles.main}>
         {/* <h1 className={styles.title}>Next Posts App</h1> */}
@@ -60,7 +68,7 @@ export default function Home() {
           </li>
         </ul>
 
-        <PostForm />
+        {user && <PostForm />}
       </main>
     </div>
   );

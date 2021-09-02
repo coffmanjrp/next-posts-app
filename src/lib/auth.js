@@ -1,5 +1,7 @@
 import netlifyIdentity from 'netlify-identity-widget';
 
+export const auth = netlifyIdentity;
+
 export const init = (callback) => {
   netlifyIdentity.on('init', (user) => {
     callback(user);
@@ -9,4 +11,15 @@ export const init = (callback) => {
 
 export const login = (callback) => {
   netlifyIdentity.open();
+  netlifyIdentity.on('login', (user) => {
+    callback(user);
+    netlifyIdentity.close();
+  });
+};
+
+export const logout = (callback) => {
+  netlifyIdentity.logout();
+  netlifyIdentity.on('logout', () => {
+    callback();
+  });
 };

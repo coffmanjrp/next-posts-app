@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { init, login as authLogin } from '../lib/auth';
+import {
+  auth,
+  init,
+  login as authLogin,
+  logout as authLogout,
+} from '../lib/auth';
 
 export const AuthContext = createContext();
 
@@ -10,16 +15,30 @@ export const AuthProvider = ({ children }) => {
     init((user) => {
       setUser(user);
     });
+
+    auth.on('login', setUser);
+
+    return () => {
+      auth.off('login', setUser);
+    };
   }, []);
 
   const login = () => {
-    authLogin();
-    console.log('login');
+    authLogin((user) => {
+      setUser(user);
+    });
+  };
+
+  const logout = () => {
+    authLogout(() => {
+      setUser(null);
+    });
   };
 
   const contextValue = {
     user,
     login,
+    logout,
   };
 
   return (
