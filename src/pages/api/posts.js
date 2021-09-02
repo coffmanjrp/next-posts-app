@@ -23,6 +23,24 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
+    const { authorization } = req.headers;
+
+    const auth = await fetch(`${process.env.NEXT_PUBLIC_AUTH_ENDPOINT}/user`, {
+      headers: {
+        Authorization: authorization,
+      },
+    });
+
+    const authJson = await auth.json();
+
+    if (!authJson) {
+      res.status(401).json({
+        error: 'Invalid token',
+      });
+
+      return;
+    }
+
     const { content } = JSON.parse(req.body);
 
     const data = {
@@ -47,8 +65,6 @@ export default async function handler(req, res) {
         body: JSON.stringify(data),
       }
     );
-
-    console.log(response);
 
     res.status(201).json({ response });
 

@@ -1,30 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Bio from '../components/Bio';
 import Post from '../components/Post';
 import PostForm from '../components/PostForm';
 import { useAuth } from '../hooks/useAuth';
+import { getAllPosts, createPost } from '../lib/posts';
 import styles from '../styles/Home.module.scss';
 
 export default function Home({ posts: defaultPosts }) {
   const [posts, updatePosts] = useState(defaultPosts);
   const { user, login, logout } = useAuth();
 
+  const postsSorted = posts.sort((a, b) => {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   const handleOnSubmit = async (data, e) => {
     e.preventDefault();
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`,
-      {
-        method: 'POST',
-        body: JSON.stringify(data),
-      }
-    );
+    await createPost(data);
 
-    const responseGet = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`
-    );
-    const { posts } = await responseGet.json();
+    const posts = await getAllPosts();
     updatePosts(posts);
   };
 
@@ -59,7 +55,7 @@ export default function Home({ posts: defaultPosts }) {
         />
 
         <ul className={styles.posts}>
-          {posts.map((post) => {
+          {postsSorted.map((post) => {
             const { id, content, date } = post;
 
             return (
@@ -83,8 +79,7 @@ export default function Home({ posts: defaultPosts }) {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/posts`);
-  const { posts } = await res.json();
+  const posts = await getAllPosts();
 
   return {
     props: {
