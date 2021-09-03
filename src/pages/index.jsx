@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Bio from '../components/Bio';
+import Nav from '../components/Nav';
 import Post from '../components/Post';
 import PostForm from '../components/PostForm';
 import { useAuth } from '../hooks/useAuth';
@@ -9,7 +10,7 @@ import styles from '../styles/Home.module.scss';
 
 export default function Home({ posts: defaultPosts }) {
   const [posts, updatePosts] = useState(defaultPosts);
-  const { user, login, logout } = useAuth();
+  const { user } = useAuth();
 
   const postsSorted = posts.sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
@@ -33,19 +34,9 @@ export default function Home({ posts: defaultPosts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {!user && (
-        <p>
-          <button onClick={() => login()}>Log In</button>
-        </p>
-      )}
-
-      {user && (
-        <p>
-          <button onClick={() => logout()}>Log Out</button>
-        </p>
-      )}
-
       <main className={styles.main}>
+        <Nav />
+
         {/* <h1 className={styles.title}>Next Posts App</h1> */}
         <Bio
           headshot="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"

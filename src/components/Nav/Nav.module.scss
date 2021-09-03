@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 3.5rem;
+  button {
+    padding: 0.6rem 1rem;
+    background: #4948a7;
+    border: 0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    color: #f1f1f1;
+    cursor: pointer;
+  }
+}
